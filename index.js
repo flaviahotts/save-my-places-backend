@@ -13,6 +13,12 @@ app.use("/", uploadImgRouter);
 const userRouter = require("./routes/user.routes");
 app.use("/user", userRouter);
 
+const pinRouter = require("./routes/pin.routes");
+app.use("/pin", pinRouter);
+
+const commentRouter = require("./routes/comment.routes");
+app.use("/comment", commentRouter);
+
 app.listen(Number(process.env.PORT), () => {
   console.log("Server up at port: ", process.env.PORT);
 });

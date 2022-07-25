@@ -9,6 +9,7 @@ const isAdmin = require("../middlewares/isAdmin");
 
 const saltRounds = 10;
 
+//Create user
 router.post("/signup", async (req, res) => {
   try {
     // Primeira coisa: Criptografar a senha!
@@ -38,6 +39,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+//Login
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -65,8 +67,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/profile", isAuth, attachCurrentUser, (req, res) => {
-  return res.status(200).json(req.currentUser);
+router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
+  const loggedInUser = req.currentUser;
+  const user = await UserModel.findById(loggedInUser._id).populate("pinList") .populate("commentList")
+  return res.status(200).json(user);
 });
 
 router.patch("/update-profile", isAuth, attachCurrentUser, async (req, res) => {

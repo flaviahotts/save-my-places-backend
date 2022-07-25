@@ -1,4 +1,4 @@
-const { Schema, model, default: mongoose } = require("mongoose");
+const { Schema, model, Types, default: mongoose } = require("mongoose");
 
 const userSchema = new Schema({
   name: { type: String, required: true, trim: true },
@@ -14,6 +14,8 @@ const userSchema = new Schema({
   role: { type: String, enum: ["ADMIN", "USER"], default: "USER" },
   isActive: { type: Boolean, default: true },
   disabledOn: { type: Date },
+  pinList:[{ type: Types.ObjectId, ref: "Pin"}],
+  commentList: [{ type: Types.ObjectId, ref: "Comment"}]
 });
 
 const UserModel = model("User", userSchema);
