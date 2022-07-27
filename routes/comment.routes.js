@@ -27,7 +27,7 @@ router.post("/:pinId/create-comment", isAuth, attachCurrentUser, async (req, res
 
         await PinModel.findOneAndUpdate(
         { _id: pinId },
-        { $push: { comments: createdComment._id } }
+        { $push: { comment: createdComment._id } }
         );
 
         return res.status(200).json(createdComment);
@@ -81,8 +81,8 @@ router.delete("/delete/:commentId", isAuth, attachCurrentUser, async (req, res) 
         const deletedComment = await CommentModel.deleteOne({ _id: commentId, });
 
         await PinModel.updateMany(
-        { comments: commentId },
-        { $pull: { comments: commentId } }
+        { comment: commentId },
+        { $pull: { comment: commentId } }
         );
 
         await UserModel.findOneAndUpdate(

@@ -23,7 +23,7 @@ try {
         { $push: { pinList: createdPin._id } }
     );
     return res.status(200).json(createdPin);
-} catch (err) {
+    } catch (err) {
     console.log(err);
     return res.status(500).json(err);
 }
@@ -45,9 +45,9 @@ router.get("/my-pins", isAuth, attachCurrentUser, async (req, res) => {
 router.get("/:pinId", isAuth, async (req, res) => {
     try {
     const { pinId } = req.params;
-    const pin = await PinModel.findOne({ _id: pinId }).populate("comments");
+    const foundPin = await PinModel.findOne({ _id: pinId }).populate("comment");
 
-    return res.status(200).json(pin);
+    return res.status(200).json(foundPin);
     } catch (err) {
     console.log(err);
     return res.status(500).json(err);
@@ -61,7 +61,7 @@ router.patch("/edit/:pinId", isAuth, attachCurrentUser, async (req, res) => {
     const { pinId } = req.params;
     const loggedInUser = req.currentUser;
     const body = { ...req.body };
-    delete body.pins;
+    delete body.pin;
     const pin = await PinModel.findOneAndUpdate({ _id: pinId });
     if (String(pin.user) !== String(loggedInUser._id)) {
         return res.status(401).json({ message: "Sorry, you can't edit a pin created by another user" });

@@ -12,8 +12,7 @@ const saltRounds = 10;
 //Create user
 router.post("/signup", async (req, res) => {
   try {
-    // Primeira coisa: Criptografar a senha!
-
+    
     const { password } = req.body;
 
     if (!password) {
