@@ -56,19 +56,21 @@ router.get("/:pinId", isAuth, async (req, res) => {
 
 // Edit/update pin
 
-router.patch("/edit/:pinId", isAuth, attachCurrentUser, async (req, res) => {
+router.patch("/edit/:id", isAuth, attachCurrentUser, async (req, res) => {
     try {
-    const { pinId } = req.params;
-    const loggedInUser = req.currentUser;
-    const body = { ...req.body };
-    delete body.pin;
-    const pin = await PinModel.findOneAndUpdate({ _id: pinId });
-    if (String(pin.user) !== String(loggedInUser._id)) {
-        return res.status(401).json({ message: "Sorry, you can't edit a pin created by another user" });
-    }  
+    const { id } = req.params;
+
+    // const loggedInUser = req.currentUser;
+    // const body = { ...req.body };
+    // delete body.pin;
+    // const pin = await PinModel.findOneAndUpdate({ _id: pinId });
+    // if (String(pin.user) !== String(loggedInUser._id)) {
+    //     return res.status(401).json({ message: "Sorry, you can't edit a pin created by another user" });
+    // }  
+
     const editedPin = await PinModel.findOneAndUpdate(
-        { _id: pinId },
-        { ...body },
+        { _id: id },
+        { ...req.body },
         { new: true, runValidators: true }
     );
     return res.status(200).json(editedPin);
@@ -83,34 +85,30 @@ router.patch("/edit/:pinId", isAuth, attachCurrentUser, async (req, res) => {
 router.delete("/delete/:pinId", isAuth, attachCurrentUser, async (req, res) => {
     try {
         const { pinId } = req.params;
-        const loggedInUser = req.currentUser;
 
-        const pin = await PinModel.findOne({ _id: pinId });
-        if (String(pin.user) !== String(loggedInUser._id)) {
-        return res.status(401).json({ message: "Sorry, you can't delete a pin created by another person" });
-        }
+        // const loggedInUser = req.currentUser;
+        // const pin = await PinModel.findOne({ _id: pinId });
+        // if (String(pin.user) !== String(loggedInUser._id)) {
+        // return res.status(401).json({ message: "Sorry, you can't delete a pin created by another person" });
+        // }
+        // const comments = pin.comment;
+        // comments.forEach(async (currentElement) => {
+        // if (pinId) {
+        //     await UserModel.findOneAndUpdate(
+        //     { _id: currentElement.user},
+        //     { $pull: { commentList: currentElement._id } },
+        //     { new: true, runValidators: true }
+        //     );
+        // }
+        // });
+        // await CommentModel.deleteMany({ pin: pinId });
+        // await UserModel.findOneAndUpdate(
+        // { _id: loggedInUser._id },
+        // { $pull: { pinList: pinId } },
+        // { runValidators: true }
+        // );
 
-        const comments = pin.comment;
-
-        comments.forEach(async (currentElement) => {
-        if (pinId) {
-            await UserModel.findOneAndUpdate(
-            { _id: currentElement.user},
-            { $pull: { commentList: currentElement._id } },
-            { new: true, runValidators: true }
-            );
-        }
-        });
-
-        await CommentModel.deleteMany({ pin: pinId });
-
-        await UserModel.findOneAndUpdate(
-        { _id: loggedInUser._id },
-        { $pull: { pinList: pinId } },
-        { runValidators: true }
-        );
-
-        const deletedPin = await PinModel.deleteOne({_id: pinId });
+    const deletedPin = await PinModel.deleteOne({_id: pinId });
 
         return res.status(200).json(deletedPin);
     } catch (error) {

@@ -93,11 +93,7 @@ router.patch("/update-profile", isAuth, attachCurrentUser, async (req, res) => {
 
 //SOFT DELETE
 
-router.delete(
-  "/disable-profile",
-  isAuth,
-  attachCurrentUser,
-  async (req, res) => {
+router.delete("/disable-profile", isAuth, attachCurrentUser, async (req, res) => {
     try {
       const disabledUser = await UserModel.findOneAndUpdate(
         { _id: req.currentUser._id },
