@@ -1,11 +1,14 @@
-# API RESTful template
+# Save My Places App (backend)
 
-Template para construção de APIs utilizando Node, Express, JWT e Mongoose.
+This project was developed with MERN stack as part of the Web Development Bootcamp.<br>
+< Currently work in progress >
 
-**Utilização:**
 
-- Clique no botão "Use this template"
-- Clone o repo que for criado nesse processo
-- Execute o comando `npm install` no terminal na raiz do projeto
-- Crie um arquivo `.env` baseado no arquivo `.exemple.env` presente no repositório
-- Para colocar o servidor para rodar, execute no terminal o comando `npm run dev`
+### Project Apresentation
+
+Check [here](https://www.canva.com/design/DAFHyAVjx3Q/9FZAKo3xCSNigsopM5Lkig/view?utm_content=DAFHyAVjx3Q&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
+
+
+### Deployment
+
+Check the App [here](https://reacttodolistproject.netlify.app/)
